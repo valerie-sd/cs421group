@@ -1,0 +1,4 @@
+--COMP421 Group 11 project
+
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
