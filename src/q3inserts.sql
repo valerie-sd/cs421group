@@ -5,3 +5,5 @@ INSERT INTO pet_likes_interest VALUES(
 (10,5),
 (10, 7)
 );
+
+SELECT * FROM pet_likes_interest;
