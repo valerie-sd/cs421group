@@ -1,4 +1,7 @@
-﻿--COMP421 Group 11 project
+﻿--COMP421 
+--Group 11 
+--Project Part 2
+--Schema definitions
 
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;

@@ -1,5 +1,6 @@
 --COMP 421
---Question 3
+--Group 11
+--Project Part 2
 --Inserts into one relation
 
 INSERT INTO users VALUES (
