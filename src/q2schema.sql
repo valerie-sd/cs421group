@@ -36,7 +36,7 @@ CREATE TABLE pet_pages (
 	page_id		INTEGER		PRIMARY KEY REFERENCES pages(page_id) ON DELETE CASCADE CHECK( page_id >= 0 ),
 	species		VARCHAR(100)	NOT NULL,
 	gender		CHAR(1)		NOT NULL DEFAULT 'N' CHECK (gender ~ '^[MFN]$'),
-	age		INTEGER		NULL CHECK( age >= 0 )
+	age		INTEGER		NULL CHECK( age >= 0 ),
 	birthday	DATE 	NULL
 );
 
@@ -94,6 +94,6 @@ CREATE TABLE pet_in_activity (
 
 CREATE TABLE pet_poll_response (
 	pet_id		INTEGER		NOT NULL REFERENCES pet_pages(page_id) CHECK( pet_id >= 0 ),
-	response_id	INTEGER		NOT NULL REFERENCES responses(response_id) CHECK( activity_id >= 0 ),
+	response_id	INTEGER		NOT NULL REFERENCES responses(response_id) CHECK( response_id >= 0 ),
 	time_stamp	TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
