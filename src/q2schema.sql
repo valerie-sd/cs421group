@@ -36,7 +36,7 @@ CREATE TABLE pet_pages (
 	page_id		INTEGER		PRIMARY KEY REFERENCES pages(page_id) ON DELETE CASCADE CHECK( page_id >= 0 ),
 	species		VARCHAR(100)	NOT NULL,
 	gender		CHAR(1)		NOT NULL DEFAULT 'N' CHECK (gender ~ '^[MFN]$'),
-	age		INTEGER		NULL CHECK( age >= 0 )
+	age		INTEGER		NULL CHECK( age >= 0 ),
 	birthday	DATE 	NULL
 );
 
