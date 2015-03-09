@@ -32,14 +32,14 @@ INSERT INTO pages (page_id, pname, pic_path, description, manager_user_id) VALUE
 	(18, 'Watching People', DEFAULT, NULL, 6);
 
 INSERT INTO group_pages (page_id, num_members, privacy) VALUES
-	(13, DEFAULT, 'P'),
-	(14, DEFAULT, 'G'),
-	(15, DEFAULT, 'G');
+	(13, 0, 'P'),
+	(14, 0, 'G'),
+	(15, 0, 'G');
 
 INSERT INTO interest_pages (page_id, num_likers) VALUES
-	(16, DEFAULT),
-	(17, DEFAULT),
-	(18, DEFAULT);
+	(16, 0),
+	(17, 0),
+	(18, 0);
 
 INSERT INTO pet_pages (page_id, species, gender, age) VALUES
 	(01, 'Dog', 'M', 1),
