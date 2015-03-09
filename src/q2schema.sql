@@ -29,7 +29,7 @@ CREATE TABLE group_pages (
 
 CREATE TABLE interest_pages (
 	page_id		INTEGER		PRIMARY KEY REFERENCES pages(page_id) ON DELETE CASCADE CHECK( page_id >= 0 ),
-	num_likers	INTEGER		NOT NULL DEFAULT 0 CHECK( num_likers >= 0 ) 
+	num_likers	INTEGER		NOT NULL CHECK( num_likers >= 0 ) 
 );
 
 CREATE TABLE pet_pages (
@@ -67,7 +67,7 @@ CREATE TABLE polls (
 CREATE TABLE responses (
 	response_id	INTEGER		PRIMARY KEY CHECK( response_id >= 0 ),
 	response_text	TEXT		NOT NULL,
-	num_votes	INTEGER		NOT NULL DEFAULT 0 CHECK( num_votes >= 0 ),
+	num_votes	INTEGER		NOT NULL CHECK( num_votes >= 0 ),
 	poll_id		INTEGER		NOT NULL REFERENCES polls(poll_id) ON DELETE CASCADE CHECK( poll_id >= 0 )
 );
 
