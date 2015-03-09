@@ -29,7 +29,16 @@ INSERT INTO pages (page_id, pname, pic_path, description, manager_user_id) VALUE
 	(15, 'The best frisbee team', DEFAULT, NULL, 5),
 	(16, 'Associated Soccerballers of Swaziland', DEFAULT, NULL, 6),
 	(17, 'Frisbee', DEFAULT, NULL, 6),
-	(18, 'Watching People', DEFAULT, NULL, 6);
+	(18, 'Watching People', DEFAULT, NULL, 6),
+	(19, 'Whatever', DEFAULT, NULL, 6),
+	(20, '3AM DB party', DEFAULT, NULL, 6),
+	(21, 'People', DEFAULT, NULL, 6),
+	(22, 'Watching', DEFAULT, NULL, 6),
+	(23, 'Waple', DEFAULT, NULL, 6),
+	(24, 'Watce', DEFAULT, NULL, 6),
+	(25, 'ple', DEFAULT, NULL, 6),
+	(26, 'apple', DEFAULT, NULL, 2);
+
 
 INSERT INTO group_pages (page_id, num_members, privacy) VALUES
 	(13, 0, 'P'),
@@ -39,7 +48,15 @@ INSERT INTO group_pages (page_id, num_members, privacy) VALUES
 INSERT INTO interest_pages (page_id, num_likers) VALUES
 	(16, 0),
 	(17, 0),
-	(18, 0);
+	(18, 0),
+	(19, 0),
+	(20, 11),
+	(21, 4),
+	(22, 10),
+	(23, 25),
+	(24, 55),
+	(25, 11),
+	(26, 25);
 
 INSERT INTO pet_pages (page_id, species, gender, age) VALUES
 	(01, 'Dog', 'M', 1),
