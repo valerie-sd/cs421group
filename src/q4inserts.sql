@@ -58,19 +58,19 @@ INSERT INTO interest_pages (page_id, num_likers) VALUES
 	(25, 11),
 	(26, 25);
 
-INSERT INTO pet_pages (page_id, species, gender, age) VALUES
-	(01, 'Dog', 'M', 1, 2014-2-15),
-	(02, 'Dog', 'F', 7),
-	(03, 'Fish', 'M', 1),
-	(04, 'Fish', 'F', 1, 2013-11-2),
-	(05, 'Cat', 'F', 1),
-	(06, 'Cat', 'N', 6),
-	(07, 'Dog', 'M', 1),
-	(08, 'Cat', 'F', 1),
-	(09, 'Turtle', 'M', 2, 2013-3-9),
-	(10, 'Cat', 'F', 1, 2013-9-14),
-	(11, 'Pig', 'M', 1, 2014-1-30),
-	(12, 'Gerbil', 'M', 3);
+INSERT INTO pet_pages (page_id, species, gender, age, birthday) VALUES
+	(01, 'Dog', 'M', 1, '2014-2-15'),
+	(02, 'Dog', 'F', 7, NULL),
+	(03, 'Fish', 'M', 1, NULL),
+	(04, 'Fish', 'F', 1, '2013-11-2'),
+	(05, 'Cat', 'F', 1, NULL),
+	(06, 'Cat', 'N', 6, NULL),
+	(07, 'Dog', 'M', 1, NULL),
+	(08, 'Cat', 'F', 1, NULL),
+	(09, 'Turtle', 'M', 2, '2013-3-9'),
+	(10, 'Cat', 'F', 1, '2013-9-14'),
+	(11, 'Pig', 'M', 1, '2014-1-30'),
+	(12, 'Gerbil', 'M', 3, NULL);
 
 INSERT INTO posts (post_id, content_path, time_stamp, creator, parent_post_id) VALUES
 	(01, DEFAULT, '2015-01-05 15:32:00', 01, NULL),
