@@ -59,17 +59,17 @@ INSERT INTO interest_pages (page_id, num_likers) VALUES
 	(26, 25);
 
 INSERT INTO pet_pages (page_id, species, gender, age) VALUES
-	(01, 'Dog', 'M', 1),
+	(01, 'Dog', 'M', 1, 2014-2-15),
 	(02, 'Dog', 'F', 7),
 	(03, 'Fish', 'M', 1),
-	(04, 'Fish', 'F', 1),
+	(04, 'Fish', 'F', 1, 2013-11-2),
 	(05, 'Cat', 'F', 1),
 	(06, 'Cat', 'N', 6),
 	(07, 'Dog', 'M', 1),
 	(08, 'Cat', 'F', 1),
-	(09, 'Turtle', 'M', 2),
-	(10, 'Cat', 'F', 1),
-	(11, 'Pig', 'M', 1),
+	(09, 'Turtle', 'M', 2, 2013-3-9),
+	(10, 'Cat', 'F', 1, 2013-9-14),
+	(11, 'Pig', 'M', 1, 2014-1-30),
 	(12, 'Gerbil', 'M', 3);
 
 INSERT INTO posts (post_id, content_path, time_stamp, creator, parent_post_id) VALUES
