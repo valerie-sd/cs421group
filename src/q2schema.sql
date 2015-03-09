@@ -37,6 +37,7 @@ CREATE TABLE pet_pages (
 	species		VARCHAR(100)	NOT NULL,
 	gender		CHAR(1)		NOT NULL DEFAULT 'N' CHECK (gender ~ '^[MFN]$'),
 	age		INTEGER		NULL CHECK( age >= 0 )
+	birthday	DATE 	NULL
 );
 
 CREATE TABLE posts (
