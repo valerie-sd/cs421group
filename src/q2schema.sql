@@ -94,6 +94,6 @@ CREATE TABLE pet_in_activity (
 
 CREATE TABLE pet_poll_response (
 	pet_id		INTEGER		NOT NULL REFERENCES pet_pages(page_id) CHECK( pet_id >= 0 ),
-	response_id	INTEGER		NOT NULL REFERENCES responses(response_id) CHECK( activity_id >= 0 ),
+	response_id	INTEGER		NOT NULL REFERENCES responses(response_id) CHECK( response_id >= 0 ),
 	time_stamp	TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
