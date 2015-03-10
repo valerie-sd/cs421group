@@ -30,6 +30,6 @@ JOIN pet_friends_with
 ON pet_pages.page_id = pet_friends_with.pet_id;
 
 --Lists all interests of each pet
-SELECT DISTINCT 
+SELECT DISTINCT *
 FROM interest_pages, pet_likes_interest, pet_pages
 WHERE interest_pages.page_id = pet_likes_interest.interest_id AND pet_pages.page_id = pet_likes_interest.pet_id;
