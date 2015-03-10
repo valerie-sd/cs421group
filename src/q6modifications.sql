@@ -7,15 +7,17 @@
 UPDATE pet_pages SET age = age + 1
 	WHERE birthday = current_date;
 
---alteration: for all pets who answered yes to this poll, make a post saying so.
-	
+--alteration: delete all pages that no one likes.
+DELETE FROM pages 
+	WHERE page_id 
+	IN (SELECT page_id FROM interest_pages WHERE num_likers = 0);
+		
 --alteration: delete a pet, and then decrement all pages that they liked.
 UPDATE interest_pages ip SET num_likers = num_likers - 1
 	FROM pet_likes_interest pli 
 	WHERE pli.pet_id = 02 AND pli.interest_id = ip.page_id;
 DELETE FROM pages WHERE page_id = 02;
 	 
-
 --alteration: add a "City" field to the pages table, and make it NULL-able. Add some values.
 ALTER TABLE pages 
 	ADD COLUMN city varchar(20) NULL;
