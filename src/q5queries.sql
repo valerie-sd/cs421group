@@ -9,7 +9,12 @@ FROM posts, pages
 WHERE posts.creator = pages.page_id;
 
 --Returns all pets who are in some sort of activity
-SELECT * FROM pet_pages WHERE pet_pages.page_id IN (SELECT pet_in_activity.pet_id FROM pet_in_activity);
+SELECT * 
+FROM pet_pages
+WHERE pet_pages.page_id 
+IN (SELECT pet_in_activity.pet_id 
+	FROM pet_in_activity);
+	
 --Returns the most popular interests amoungst users
 
 --Returns the more popular responses for each poll
