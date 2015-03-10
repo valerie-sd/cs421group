@@ -15,12 +15,13 @@ WHERE pet_pages.page_id
 IN (SELECT pet_in_activity.pet_id 
 	FROM pet_in_activity);
 	
---Returns the most popular interests amoungst users
-
-SELECT polls.poll_id, poll.question_text, responses.response_text, responses.num_votes
-FROM polls
-JOIN responses
-ON polls.poll_id = responses.poll_id;
+--Returns the popular responses amoungst users
+SELECT TEMP.question_text, TEMP.response_text, TEMP.num_votes
+FROM ( SELECT * 
+	   FROM polls 
+	   JOIN responses 
+	   ON polls.poll_id = responses.poll_id )  AS TEMP
+WHERE TEMP.num_votes >= 10;
 
 --Returns the more popular responses for each poll
 /*

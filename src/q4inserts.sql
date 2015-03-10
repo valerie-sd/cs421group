@@ -95,11 +95,11 @@ INSERT INTO polls (poll_id, creator, question_text) VALUES
 	(02, 12, 'Who is your favourite character on House of Cards?');
 
 INSERT INTO responses (response_id, response_text, num_votes, poll_id) VALUES
-	(01, 'Yes', 0, 01),
-	(02, 'No', 0, 01),
-	(03, 'Frank Underwood', 0, 02),
-	(04, 'Claire Underwood', 0, 02),
-	(05, 'Edward Meechum', 0, 02);
+	(01, 'Yes', 15, 01),
+	(02, 'No', 22, 01),
+	(03, 'Frank Underwood', 41, 02),
+	(04, 'Claire Underwood', 15, 02),
+	(05, 'Edward Meechum', 55, 02);
 
 INSERT INTO pet_friends_with (pet_id, friend_id) VALUES
 	(01, 02),
