@@ -23,17 +23,13 @@ FROM ( SELECT *
 	   ON polls.poll_id = responses.poll_id )  AS TEMP
 WHERE TEMP.num_votes >= 10;
 
---Returns the more popular responses for each poll
-/*
---A view composed of the most popular interests amoungst users
-CREATE VIEW Popular_Interests AS
-SELECT pages.pname, pages.description, interest_pages.page_id, interest_pages.num_likers
-FROM pages, interest_pages
-WHERE interest_pages.num_likers >= 10 ;
+--Lists everyone and their friends
+SELECT DISTINCT *
+FROM pet_pages
+JOIN pet_friends_with
+ON pet_pages.page_id = pet_friends_with.pet_id;
 
---A view composed of the more popular responses for each poll
-CREATE VIEW Popular_Responses AS
-SELECT polls.question_text, responses.response_text, responses.num_votes
-FROM polls, responses
-WHERE polls.poll_id = responses.poll_id AND responses.num_votes >= 10 ;
-*/
+--Lists all interests of each pet
+SELECT DISTINCT 
+FROM interest_pages, pet_likes_interest, pet_pages
+WHERE interest_pages.page_id = pet_likes_interest.interest_id AND pet_pages.page_id = pet_likes_interest.pet_id;
