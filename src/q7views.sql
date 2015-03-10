@@ -13,7 +13,7 @@ CREATE VIEW NumberOfFriends AS
 SELECT DISTINCT pages.page_id, pages.pname, pet_pages.species, pet_pages.age, COUNT(*) AS friends FROM pages, pet_pages, pet_friends_with
 WHERE pages.page_id = pet_pages.page_id AND pages.page_id = pet_friends_with.pet_id OR pages.page_id = pet_friends_with.friend_id
 GROUP BY pages.page_id, pages.pname, pet_pages.species, pet_pages.age
-HAVING friends > 5;
+HAVING COUNT(*) > 5;
 
 --Selects pets interested in frisbee older than 1 year old
 SELECT DISTINCT pages.pname, pet_pages.species, pet_pages.age
