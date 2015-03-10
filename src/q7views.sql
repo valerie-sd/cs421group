@@ -15,11 +15,11 @@ WHERE pages.page_id = pet_pages.page_id AND pages.page_id = pet_friends_with.pet
 GROUP BY pages.page_id, pages.pname, pet_pages.species, pet_pages.age;
 
 --Selects pets interested in frisbee older than 1 year old
-SELECT pages.pname, pet_pages.species, pet_pages.age
+SELECT DISTINCT pages.pname, pet_pages.species, pet_pages.age
 FROM pages, pet_pages, FrisbeeFans
 WHERE pet_pages.age > 1;
 
 --Selects pets with more than 5 friends
 SELECT pages.pname, pet_pages.species, pet_pages.age
 FROM pages, pet_pages, NumberOfFriends
-WHERE friends > 5;
+HAVING friends > 5;
