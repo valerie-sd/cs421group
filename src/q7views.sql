@@ -21,6 +21,6 @@ FROM pages, pet_pages, FrisbeeFans
 WHERE pet_pages.age > 1;
 
 --Selects dogs with more than 5 friends
-SELECT pages.pname, pet_pages.age
+SELECT DISTINCT pages.pname, pet_pages.age
 FROM pages, pet_pages, NumberOfFriends
 WHERE pet_pages.species = 'Dog';
