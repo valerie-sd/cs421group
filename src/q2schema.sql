@@ -13,7 +13,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE pages (
-	page_id		INTEGER 	PRIMARY KEY  CHECK( page_id >= 0 ),
+	page_id		INTEGER 	PRIMARY KEY CHECK( page_id >= 0 ),
 	pname		VARCHAR(100)	NOT NULL,
 	pic_path	VARCHAR(200)	NOT NULL DEFAULT '/pic/default.png',
 	description	TEXT		NULL,
@@ -44,8 +44,8 @@ CREATE TABLE posts (
 	post_id		INTEGER		PRIMARY KEY CHECK( post_id >= 0 ),
 	content_path	VARCHAR(200)	NOT NULL DEFAULT '/post/default.txt',
 	time_stamp	TIMESTAMP	NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	creator		INTEGER		NOT NULL REFERENCES pages(page_id),
-	parent_post_id	INTEGER		NULL REFERENCES posts(post_id) CHECK(parent_post_id >= 0 )
+	creator		INTEGER		NOT NULL REFERENCES pages(page_id) ON DELETE CASCADE,
+	parent_post_id	INTEGER		NULL REFERENCES posts(post_id) ON DELETE CASCADE CHECK(parent_post_id >= 0 )
 );
 
 CREATE TABLE activities (
