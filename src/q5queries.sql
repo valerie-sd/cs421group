@@ -17,6 +17,11 @@ IN (SELECT pet_in_activity.pet_id
 	
 --Returns the most popular interests amoungst users
 
+SELECT polls.poll_id, poll.question_text, responses.response_text, responses.num_votes
+FROM polls
+JOIN responses
+ON polls.poll_id = responses.poll_id;
+
 --Returns the more popular responses for each poll
 /*
 --A view composed of the most popular interests amoungst users
