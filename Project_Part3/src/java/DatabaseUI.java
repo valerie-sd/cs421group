@@ -34,7 +34,7 @@ public class DatabaseUI {
 		//prints options
 		_printer.printOptions();
 		
-		while(_response != 6)
+		while(_response != 7)
 		{
 		
 			_response = _printer.takeOptionInput();
