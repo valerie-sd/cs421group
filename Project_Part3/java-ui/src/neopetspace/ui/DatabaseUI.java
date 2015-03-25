@@ -8,11 +8,13 @@ package neopetspace.ui;
 //Main interface
 
 import java.sql.*;
+import java.io.*;
 
 public class DatabaseUI {
 
 	static boolean _quit;
 	static Printer _printer;
+	private static BufferedReader _input = new BufferedReader(new InputStreamReader(System.in));
 	static int _response;
 	static String _username;
 	static String _password;
@@ -70,7 +72,11 @@ public class DatabaseUI {
 			optionThree();
 			break;
 		case 4:
-			optionFour();
+			try {
+				optionFour();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			break;
 		case 5:
 			optionFive();
@@ -92,10 +98,12 @@ public class DatabaseUI {
 
 	static void optionOne() throws SQLException {
 		Statement stmt = null;
-		String query = "SELECT * FROM pet_pages";
+		String query = "SELECT * FROM pet_pages pp ORDER BY pp.page_id";
 		try {
 			stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
+			System.out.println("page_id\tspecies\tgender\tage\tbirthday");
+			System.out.println("---------------------------------------------------------------");
 			while (rs.next()) {
 				int page_id = rs.getInt("page_id");
 				String species = rs.getString("species");
@@ -105,6 +113,7 @@ public class DatabaseUI {
 				System.out.println(page_id + "\t" + species + "\t" + gender
 						+ "\t" + age + "\t" + birthday);
 			}
+			System.out.println("---------------------------------------------------------------\n");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -118,9 +127,45 @@ public class DatabaseUI {
 	}
 
 	static void optionThree() {
+
 	}
 
-	static void optionFour() {
+	static void optionFour() throws Exception {
+		Statement stmt = null;
+		int petId = -1;
+		
+		System.out.print("\nEnter a pet id: ");
+		try {
+			petId = Integer.parseInt(_input.readLine());
+		} catch (IOException e) {
+			throw new Exception("Input could not be read");
+		}
+		String query = "SELECT p.pname AS pname"
+				+ "       FROM pages p "
+				+ "      WHERE p.page_id IN ("
+				+ "            SELECT * "
+				+ "              FROM update_suggested_interests(" + petId + ")"
+						+ "    )";
+//		String query = "SELECT * "
+//         + "              FROM update_suggested_interests(" + petId + ")";
+		
+		try {
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			System.out.println("\nsuggested interest page names");
+			System.out.println("-----------------------------");
+			while (rs.next()) {
+				String pname = rs.getString("pname");
+				System.out.println(pname);
+			}
+			System.out.println("-----------------------------\n");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
 	}
 
 	static void optionFive() {
