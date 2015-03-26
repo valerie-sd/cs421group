@@ -79,7 +79,12 @@ public class DatabaseUI {
 			}
 			break;
 		case 5:
-			optionFive();
+			try{
+				optionFive();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			break;
 		case 6:
 			optionSix();
@@ -168,8 +173,124 @@ public class DatabaseUI {
 		}
 	}
 
-	static void optionFive() {
+	static void optionFive() throws Exception{
+		Statement stmt = null;
+		int choice = -1;
+		String query = "";
+		String createIndexQ = "";
+		
+		System.out.println("To test the index on popular poll responses, press 1.");
+		System.out.println("To test the index on posts created by a given page, press 2");
+		System.out.println("To return to the main menu, press 3");
+		
+		try {
+			choice = Integer.parseInt(_input.readLine());
+		} catch (IOException e) {
+			throw new Exception("Input could not be read");
+		}
+		
+		if(choice == 1){
+			query = "SELECT TEMP.question_text, TEMP.response_text, TEMP.num_votes " +
+					"FROM ( SELECT * " + "FROM polls " + "JOIN responses " + "ON polls.poll_id = responses.poll_id )  AS TEMP "+ 
+					"WHERE TEMP.num_votes >= 10";
+			
+			createIndexQ = "CREATE INDEX respInd ON responses(num_votes)";
+			String cluster = "CLUSTER responses USING respInd";
+			String drop = "DROP INDEX IF EXISTS respInd";
+			try{
+				long woBefore = System.currentTimeMillis();
+				stmt = connection.createStatement();
+				
+				ResultSet rs = stmt.executeQuery(query);
+				long woAfter = System.currentTimeMillis();
+				System.out.println("\nPopular response: ");
+				System.out.println("-----------------------------");
+				
+				while(rs.next()){
+					String question = rs.getString("question_text");
+					String response = rs.getString("response_text");
+					int votes = rs.getInt("num_votes");
+					
+					System.out.println(question + "\t" + response + "\t" + "\t" + votes);	
+				}
+				
+				System.out.println("-----------------------------\n");
+				
+				long dt = woAfter - woBefore;
+				
+				System.out.println("Time taken without index: " + dt);
+				
+				stmt.execute(createIndexQ);
+				stmt.execute(cluster);
+				long wBefore = System.currentTimeMillis();
+				stmt = connection.createStatement();
+				stmt.executeQuery(query);
+				long wAfter = System.currentTimeMillis();
+				dt = wAfter - wBefore;
+				stmt.execute(drop);
+				System.out.println("Time taken with index: "+ dt);
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		else if (choice == 2){
+			int pid = -1;
+			
+			createIndexQ = "CREATE INDEX creatorInd ON posts(creator)";
+			String drop = "DROP INDEX IF EXISTS creatorInd";
+			System.out.println("Enter a page id number to retrieve their posts.");
+			
+			try {
+				pid = Integer.parseInt(_input.readLine());
+			} catch (IOException e) {
+				throw new Exception("Input could not be read");
+			}
+			query = "SELECT posts.post_id, posts.creator, pages.pname, pages.description, pages.manager_user_id " +
+					"FROM posts, pages WHERE posts.creator = pages.page_id AND posts.creator = " + pid;
+			
+			try{
+				long woBefore = System.currentTimeMillis();
+				stmt = connection.createStatement();
+				
+				ResultSet rs = stmt.executeQuery(query);
+				long woAfter = System.currentTimeMillis();
+				System.out.println("\nPosts made by given page id: ");
+				System.out.println("-----------------------------");
+				
+				while(rs.next()){
+					int postid = rs.getInt("post_id");
+					int creator = rs.getInt("creator");
+					String pname = rs.getString("pname");
+					String desc = rs.getString("description");
+					int uid = rs.getInt("manager_user_id");
+					System.out.println(postid +"\t" + creator + "\t" + pname + "\t" + desc + "\t" + uid);	
+				}
+				
+				System.out.println("-----------------------------\n");
+				
+				long dt = woAfter - woBefore;
+				
+				System.out.println("Time taken without index: " + dt);
+				
+				stmt.execute(createIndexQ);
+				long wBefore = System.currentTimeMillis();
+				stmt = connection.createStatement();
+				stmt.executeQuery(query);
+				long wAfter = System.currentTimeMillis();
+				dt = wAfter - wBefore;
+				stmt.execute(drop);
+				System.out.println("Time taken with index: "+ dt);
+				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		else if(choice == 3){
+			_printer.printOptions();
+		}
 	}
+
 
 	// re-prints options for the user
 	static void optionSix() {
