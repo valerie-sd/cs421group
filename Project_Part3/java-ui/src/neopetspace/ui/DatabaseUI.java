@@ -129,6 +129,221 @@ public class DatabaseUI {
 	}
 
 	static void optionTwo() {
+		//Add a new pet to the database
+		Statement stmt = null;
+		//get highest page ID used so far
+		int pageID = 0;
+		int page_num = 0;
+		String query = "SELECT MAX(page_id) FROM pages";
+		try {
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()){
+				page_num = rs.getInt(1);
+				//System.out.println(page_num+" is the highest used page_id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		pageID = page_num + 1;
+		stmt = null;
+		//take data from user
+		String petName = null;
+		String picPath = null;
+		String description = null;
+		int userID = 0;
+		String species = null;
+		char gender = 'f';
+		int age = -1;
+		String birthday = null;
+		boolean done = false;
+		System.out.println("Enter the data for the pet you're adding:");
+		System.out.println("PetName (required):");
+		
+		while(!done){
+			try {
+				petName = _input.readLine();
+				if(petName.matches("[a-zA-Z0-9]+")){
+					done = true;
+				}else{
+					System.out.println("Input a valid name.");
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		done = false;
+		while(!done){
+			System.out.println("Your user ID (required)(int):");
+			try{
+				userID = Integer.parseInt(_input.readLine());
+				done = true;
+			}catch (NumberFormatException e) {
+				System.out.println("\nEnter valid input\n");
+			}catch (IOException e) {
+				System.out.println("\nEnter valid input\n");
+			}
+		}
+		done = false;
+		while(!done){
+			System.out.println("Species:");
+			try {
+				species = _input.readLine();
+				if(species.length() > 0){
+					done = true;
+				}else{
+					System.out.println("Input a valid name.");
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		done = false;
+		while(!done){
+			System.out.println("Gender (char, m or f):");
+			try {
+				gender = _input.readLine().charAt(0);
+				if(!(gender=='m' || gender=='f' || gender == 'M' || gender == 'F')){
+					System.out.println("invalid input.");
+				}else{
+					if(gender == 'm'){
+						gender = 'M';
+					}
+					else if(gender == 'f'){
+						gender = 'F';
+					}
+					done = true;
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			
+		//optional inputs
+		while(!done){
+			System.out.println("Description (not required):");
+			try {
+				description = _input.readLine();
+				done = true;
+				if(description.length()==0){
+					description = null;
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		done = false;
+		while(!done){
+			System.out.println("File path for picture (not required):");
+			try {
+				picPath = _input.readLine();
+				done = true;
+				if(picPath.length()==0){
+					picPath = "DEFAULT";
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		done = false;
+		while(!done){
+			System.out.println("Age (optional)(int):");
+			String temp = null;
+			try{
+				temp = _input.readLine();
+			}catch (IOException e) {
+				System.out.println("\nEnter valid age input\n");
+			}
+			done = true;
+			//System.out.println("here is what is stored in temp: "+ temp+ " and age: "+age);
+			if(temp.length() == 0){
+				//System.out.println("skipping");
+			}else{
+				try{
+					age = Integer.parseInt(temp);
+				}catch (NumberFormatException e) {
+					System.out.println("\nEnter valid age input\n");
+					done = false;
+				}					
+			}
+		}
+		done = false;
+		while(!done){
+			System.out.println("Birthday (yyyy-mm-dd)(optional):");			
+			try {
+				birthday = _input.readLine();
+				if(birthday.length()==0){
+					birthday = "NULL";
+					done = true;
+				}else{
+					//if(!birthday.matches("([1-3][0-9]|[0-9])[-/](0[1-9]|[1-9]|1[0-2])[-/][(19|20)][0-9][0-9]")){//save me based regex god
+					if(!birthday.matches("[0-9][0-9][0-9][0-9][-/][0-9][0-9][-/][0-9][0-9]")){
+						System.out.println("Input a birthday of the proper form yyyy-mm-dd");
+					}else{
+						done = true;
+						birthday = "'"+birthday+"'";
+					}
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		String insertAge = "NULL";
+		if(age != -1){
+			insertAge = Integer.toString(age);
+		}
+		//insert into pages, pet_pages
+		String insertPage = "INSERT INTO pages (page_id, pname, pic_path, description, manager_user_id) VALUES"
+				+"	("+pageID+", '"+petName+"', "+picPath+", '"+description+"', "+userID+")";
+		String insertPet = "INSERT INTO pet_pages (page_id, species, gender, age, birthday) VALUES"
+				+"	("+pageID+", '"+species+"', '"+gender+"', "+insertAge+", "+birthday+")";
+		try {
+			stmt = connection.createStatement();
+			int rs = stmt.executeUpdate(insertPage);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		stmt = null;
+		try {
+			stmt = connection.createStatement();
+			int rs = stmt.executeUpdate(insertPet);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	static void optionThree() {
