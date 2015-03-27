@@ -310,9 +310,9 @@ public class DatabaseUI {
 		}
 		//insert into pages, pet_pages
 		String insertPage = "INSERT INTO pages (page_id, pname, pic_path, description, manager_user_id) VALUES"
-				+"	("+pageID+", '"+petName+"', "+picPath+", '"+description+"', "+userID+")";
+				+"       ("+pageID+", '"+petName+"', "+picPath+", '"+description+"', "+userID+")";
 		String insertPet = "INSERT INTO pet_pages (page_id, species, gender, age, birthday) VALUES"
-				+"	("+pageID+", '"+species+"', '"+gender+"', "+insertAge+", "+birthday+")";
+				+"       ("+pageID+", '"+species+"', '"+gender+"', "+insertAge+", "+birthday+")";
 		try {
 			stmt = connection.createStatement();
 			int rs = stmt.executeUpdate(insertPage);
@@ -347,7 +347,62 @@ public class DatabaseUI {
 	}
 
 	static void optionThree() {
-
+		//list all donkeys born after some date.
+		Statement stmt = null;
+		System.out.println("Insert date of the form yyyy-mm-dd; will find all donkeys born after that date.");
+		boolean done = false;
+		String date = "NULL";
+		while(!done){
+			try {
+				date = _input.readLine();
+				if(date.length()==0){
+					System.out.println("Input a birthday of the proper form yyyy-mm-dd");
+				}else{
+					//if(!birthday.matches("([1-3][0-9]|[0-9])[-/](0[1-9]|[1-9]|1[0-2])[-/][(19|20)][0-9][0-9]")){//save me based regex god
+					if(!date.matches("[0-9][0-9][0-9][0-9][-/][0-9][0-9][-/][0-9][0-9]")){
+						System.out.println("Input a birthday of the proper form yyyy-mm-dd");
+					}else{
+						done = true;
+						date = "'"+date+"'";
+					}
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String query = "SELECT * FROM pages pa, pet_pages pe"
+				+"       WHERE pa.page_id=pe.page_id AND pe.species='Donkhay' AND pe.birthday > "+date;
+		try {
+			stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			System.out.println("\nall relevant donkeys:");
+			System.out.println("-------------------------------------------------------------------------------------------");
+			System.out.println("NAME\tOWNER-ID\tSPECIES\t\tGENDER\tAGE\tBIRTHDAY\tDESCRIPTION");
+			System.out.println("-------------------------------------------------------------------------------------------");
+			while (rs.next()) {
+				String pname = rs.getString("pname");
+				int userID = rs.getInt("manager_user_id");
+				String description = rs.getString("description");
+				String species = rs.getString("species");
+				String gender = rs.getString("gender");
+				int age = rs.getInt("age");
+				String birthday = rs.getString("birthday");
+				System.out.println(pname+"\t"+userID+"\t\t"+species+"\t\t"+gender+"\t"+age+"\t"+birthday+"\t"+description);
+			}
+			System.out.println("-------------------------------------------------------------------------------------------\n");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	static void optionFour() throws Exception {
@@ -362,7 +417,7 @@ public class DatabaseUI {
 		}
 		String query = "SELECT p.pname AS pname"
 				+ "       FROM pages p "
-				+ "      WHERE p.page_id IN ("
+				+ "       WHERE p.page_id IN ("
 				+ "            SELECT * "
 				+ "              FROM update_suggested_interests(" + petId + ")"
 						+ "    )";
