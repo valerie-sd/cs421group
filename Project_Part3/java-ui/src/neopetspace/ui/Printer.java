@@ -26,7 +26,7 @@ public class Printer {
 
 	// Prints out starting dialog
 	public void printStart() {
-		System.out.println("\nWelcome to the Neo Pet Space DataBase\n");
+		System.out.println("\n~*Welcome to the Neo Pet Space DataBase*~\n");
 	}
 
 	// Prints out options to user
