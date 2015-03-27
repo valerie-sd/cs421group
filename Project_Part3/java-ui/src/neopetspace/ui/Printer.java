@@ -36,7 +36,7 @@ public class Printer {
 		System.out.println("2. Add a new pet page");
 		System.out.println("3. List all donkeys born after some date");
 		System.out.println("4. List suggested interest for given pet");
-		System.out.println("5. Option 5");
+		System.out.println("5. View index options");
 		System.out.println("6. Re-Print options");
 		System.out.println("7. Quit");
 		System.out.println("-----------------------------------------\n");
