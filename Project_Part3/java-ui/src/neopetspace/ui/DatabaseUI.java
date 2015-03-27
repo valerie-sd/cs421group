@@ -196,17 +196,22 @@ public class DatabaseUI {
 		}
 		done = false;
 		while(!done){
-			System.out.println("Species:");
+			System.out.println("Gender (char, m or f):");
 			try {
-				species = _input.readLine();
-				if(species.length() > 0){
-					done = true;
+				gender = _input.readLine().charAt(0);
+				if(!(gender=='m' || gender=='f' || gender == 'M' || gender == 'F')){
+					System.out.println("invalid input.");
 				}else{
-					System.out.println("Input a valid name.");
+					if(gender == 'm'){
+						gender = 'M';
+					}
+					else if(gender == 'f'){
+						gender = 'F';
+					}
+					done = true;
 				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 		done = false;
