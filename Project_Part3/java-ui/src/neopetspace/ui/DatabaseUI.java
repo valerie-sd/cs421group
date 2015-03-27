@@ -48,8 +48,10 @@ public class DatabaseUI {
 		_quit = false;
 		_printer = Printer.getInstance();
 		_response = -1;
-		_username = "cs421g11";
-		_password = "frymvomwyd";
+		//_username = "cs421g11";
+		_username = "yzhou68";
+		_password = "<T>pr1Ty";
+		//_password = "frymvomwyd";
 		_url = "jdbc:postgresql://db2.cs.mcgill.ca/CS421";
 
 		connection = DriverManager.getConnection(_url, _username, _password);
@@ -231,6 +233,7 @@ public class DatabaseUI {
 				e1.printStackTrace();
 			}
 		}			
+		done = false;
 		//optional inputs
 		while(!done){
 			System.out.println("Description (not required):");
