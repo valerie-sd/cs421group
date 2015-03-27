@@ -1,0 +1,17 @@
+
+Welcome to the Neo Pet Space DataBase
+
+-----------------------------------------
+1. Display all pets info
+2. Add a new pet page
+3. List all donkeys born after some date
+4. List suggested interest for given pet
+5. Option 5
+6. Re-Print options
+7. Quit
+-----------------------------------------
+
+Enter a number , 1 -> 7, corresponding to the options listed: 
+Enter a number , 1 -> 7, corresponding to the options listed: 
+Enter the data for the pet you're adding:
+PetName (required):
