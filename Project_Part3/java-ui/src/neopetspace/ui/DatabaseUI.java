@@ -211,26 +211,21 @@ public class DatabaseUI {
 		}
 		done = false;
 		while(!done){
-			System.out.println("Gender (char, m or f):");
+			System.out.println("Species:");
 			try {
-				gender = _input.readLine().charAt(0);
-				if(!(gender=='m' || gender=='f' || gender == 'M' || gender == 'F')){
-					System.out.println("invalid input.");
-				}else{
-					if(gender == 'm'){
-						gender = 'M';
-					}
-					else if(gender == 'f'){
-						gender = 'F';
-					}
+				species = _input.readLine();
+				if(species.length() > 0){
 					done = true;
+					//force uppercase of first letter for searching later. 
+					species = Character.toUpperCase(species.charAt(0))+species.substring(1);
+				}else{
+					System.out.println("Input a valid name.");
 				}
-			} catch (IOException e) {
+			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
-		}
-			
+		}			
 		//optional inputs
 		while(!done){
 			System.out.println("Description (not required):");
